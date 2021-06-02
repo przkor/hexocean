@@ -7,16 +7,11 @@ const dishTypes = ['pizza','soup','sandwich']
 
 function App() {
 
-  const [number,setNumber] = useState(0)
   const [name,setName] = useState('')
   const [preparation,setPreparation]=useState('')
   const [type,setType]=useState('')
-  const [dishDetails,setDishDetails] = useState('')
+  const [dishDetails,setDishDetails] = useState({})
   
-  const handleChangeNumber = (e) => {
-    setNumber(e.target.value) 
-  }
-
   const handleChangeDishName = (e) => {
     setName(e.target.value) 
   }
@@ -30,16 +25,61 @@ function App() {
   }
 
   const handleDishDetails = (e) => {
-    setDishDetails (e.target.value)
+    if (e.target.name==='slices') {
+      setDishDetails(prevValue => {
+        return {
+          ...prevValue,
+          no_of_slices: e.target.value,  
+        }
+      })
+    }
+    if (e.target.name==='diameter') {
+      setDishDetails(prevValue => {
+        return {
+          ...prevValue,
+          diameter: e.target.value,  
+        }
+      })
+    }  
   }
-
 
   const types = dishTypes.map((dishType, index) => {
     return <option key={index} value={dishType}>{dishType}</option>
   })
 
+  console.log(`Zawaartość dishDetails: ${dishDetails}`)
+
   const pizza = (
-    <p>pizza</p>
+  <>
+    <div>
+      <label htmlFor="slices">Slices</label>
+      <input 
+        type="number" 
+        id="slices"
+        name="slices"
+        min="0"
+        value={dishDetails.no_of_slices || 0}
+        onChange={handleDishDetails}
+        required
+      />
+      <span class="validity"></span>
+    </div>
+    <div>
+      <label htmlFor="diameter">Diameter</label>
+      <input 
+        type="number"
+        className="form-control"
+        id="diameter"
+        name="diameter"
+        value={dishDetails.diameter || 0.0}
+        step="0.1"
+        min="0.1"
+        onChange={handleDishDetails}
+        required
+      />
+      <span class="validity"></span>
+   </div>
+  </>
   )
 
   const soup = (
@@ -115,22 +155,7 @@ function App() {
         <div>
           {type ? elementToShow() : '' }
         </div>
-        <div>
-            <label htmlFor="number">Slices</label>
-            <input
-              type="number"
-              className="form-control"
-              id="number"
-              name="number"
-              value={number || ''}
-              step="0.1"
-              min="1"
-              onChange={handleChangeNumber}
-              required
-              />
-            <span class="validity"></span>
-          </div>
-        </form>
+      </form>
     )
   }
 
