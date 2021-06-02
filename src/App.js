@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import React,{useState}  from 'react'
+import axios from 'axios'
 
 const dishTypes = ['pizza','soup','sandwich']
 
@@ -43,11 +44,25 @@ function App() {
     }  
   }
 
+  const handleSendDish = () => {
+    axios.post("https://frosty-wood-6558.getsandbox.com:443/dishes ", {
+      name,
+      preparation,
+      type,
+      "no_of_slices": 4,
+      "diameter": 33.4
+  })
+  .then(function (response) {
+      console.log(response)
+  })
+  .catch(function (error) {
+     console.log(error);
+  });
+  }
+
   const types = dishTypes.map((dishType, index) => {
     return <option key={index} value={dishType}>{dishType}</option>
   })
-
-  console.log(`Zawaartość dishDetails: ${dishDetails}`)
 
   const pizza = (
   <>
@@ -110,7 +125,7 @@ function App() {
 
   const dishForm = () => {
    return (
-      <form onSubmit="">
+      <form onSubmit={handleSendDish}>
         <div>
           <label htmlFor="name">Dish Name</label>
           <input
@@ -131,6 +146,7 @@ function App() {
             id="preparation_time"
             name="preparation_time"
             value={preparation || '00:00:00'}
+            min="00:00:01"
             onChange={handleChangePreparation}
             required
             />
@@ -155,6 +171,14 @@ function App() {
         <div>
           {type ? elementToShow() : '' }
         </div>
+        <button
+          type="button"
+          id="submit"
+          name="submit"
+          className="btn btn-primary pull-right"
+        >
+          Send
+        </button>
       </form>
     )
   }
