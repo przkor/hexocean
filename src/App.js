@@ -7,18 +7,18 @@ const dishTypes = ['pizza','soup','sandwich']
 
 
 function App() {
-
-  const [name,setName] = useState('')
-  const [preparation,setPreparation]=useState('')
-  const [type,setType]=useState('')
-  const [dishDetails,setDishDetails] = useState({})
   
+  const [name,setName] = useState()
+  const [preparation_time,setPreparation_time]=useState()
+  const [type,setType]=useState()
+  const [dishDetails,setDishDetails] = useState({})
+ 
   const handleChangeDishName = (e) => {
     setName(e.target.value) 
   }
 
   const handleChangePreparation = (e) => {
-    setPreparation(e.target.value) 
+    setPreparation_time(e.target.value) 
   }
 
   const handleSelectDishType = (e) => {
@@ -30,7 +30,7 @@ function App() {
       setDishDetails(prevValue => {
         return {
           ...prevValue,
-          no_of_slices: e.target.value,  
+          no_of_slices: Number(e.target.value),  
         }
       })
     }
@@ -38,26 +38,32 @@ function App() {
       setDishDetails(prevValue => {
         return {
           ...prevValue,
-          diameter: e.target.value,  
+          diameter: Number(e.target.value),  
         }
       })
     }  
   }
 
-  const handleSendDish = () => {
-    axios.post("https://frosty-wood-6558.getsandbox.com:443/dishes ", {
-      name,
-      preparation,
-      type,
-      "no_of_slices": 4,
-      "diameter": 33.4
-  })
-  .then(function (response) {
-      console.log(response)
-  })
-  .catch(function (error) {
+  const handleSendDish = (e) => {
+    e.preventDefault()
+    const dishData = {
+      name:name,
+      preparation_time:preparation_time,
+      type:type
+    }
+    let data = Object.assign(dishData,dishDetails)
+   // const tab = Object.keys(dishDetails)
+    axios({
+      method: 'post',
+      url: 'https://frosty-wood-6558.getsandbox.com:443/dishes',
+      data: data
+    })
+    .then(function (response) {
+        alert(`${response.status}`)
+    })
+    .catch(function (error) {
      console.log(error);
-  });
+    });
   }
 
   const types = dishTypes.map((dishType, index) => {
@@ -125,7 +131,7 @@ function App() {
 
   const dishForm = () => {
    return (
-      <form onSubmit={handleSendDish}>
+      <form>
         <div>
           <label htmlFor="name">Dish Name</label>
           <input
@@ -145,7 +151,7 @@ function App() {
             type="time"
             id="preparation_time"
             name="preparation_time"
-            value={preparation || '00:00:00'}
+            value={preparation_time || '00:00:00'}
             min="00:00:01"
             onChange={handleChangePreparation}
             required
@@ -176,6 +182,7 @@ function App() {
           id="submit"
           name="submit"
           className="btn btn-primary pull-right"
+          onClick={handleSendDish}
         >
           Send
         </button>
