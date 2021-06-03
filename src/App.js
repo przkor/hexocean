@@ -1,10 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
 import React,{useState}  from 'react'
 import axios from 'axios'
 
 const dishTypes = ['pizza','soup','sandwich']
-
 
 function App() {
   
@@ -23,6 +21,7 @@ function App() {
 
   const handleSelectDishType = (e) => {
     setType(e.target.value) 
+    setDishDetails({})
   }
 
   const handleDishDetails = (e) => {
@@ -30,7 +29,7 @@ function App() {
       setDishDetails(prevValue => {
         return {
           ...prevValue,
-          no_of_slices: Number(e.target.value),  
+          no_of_slices: parseInt(e.target.value),  
         }
       })
     }
@@ -38,7 +37,23 @@ function App() {
       setDishDetails(prevValue => {
         return {
           ...prevValue,
-          diameter: Number(e.target.value),  
+          diameter: parseFloat(e.target.value),  
+        }
+      })
+    }
+    if (e.target.name==='spiciness_scale') {
+      setDishDetails(prevValue => {
+        return {
+          ...prevValue,
+          spiciness_scale: parseInt(e.target.value),  
+        }
+      })
+    }   
+    if (e.target.name==='slices_of_bread') {
+      setDishDetails(prevValue => {
+        return {
+          ...prevValue,
+          slices_of_bread : parseInt(e.target.value),  
         }
       })
     }  
@@ -59,7 +74,19 @@ function App() {
       data: data
     })
     .then(function (response) {
-        alert(`${response.status}`)
+      if (response.status===200) {
+        alert('Dish was add')
+        setName('')
+        setPreparation_time('')
+        setType('')
+        setDishDetails({})
+      }
+      if (response.status===404) {
+        Object.keys(response.data).forEach(key => {
+          console.log(key) // returns the keys in an object
+          console.log(response.data[key])  // returns the appropriate value 
+       })
+      }
     })
     .catch(function (error) {
      console.log(error);
@@ -78,12 +105,12 @@ function App() {
         type="number" 
         id="slices"
         name="slices"
-        min="0"
+        min="1"
         value={dishDetails.no_of_slices || 0}
         onChange={handleDishDetails}
         required
       />
-      <span class="validity"></span>
+      <span className="validity"></span>
     </div>
     <div>
       <label htmlFor="diameter">Diameter</label>
@@ -98,17 +125,44 @@ function App() {
         onChange={handleDishDetails}
         required
       />
-      <span class="validity"></span>
+      <span className="validity"></span>
    </div>
   </>
   )
 
   const soup = (
-    <p>soup</p>
+    <div>
+      <label htmlFor="spiciness_scale">Spiciness scale (1-10)</label>
+      <input 
+        type="number" 
+        id="spiciness_scale"
+        name="spiciness_scale"
+        min="1"
+        max="10"
+        step="1"
+        value={dishDetails.spiciness_scale || 0}
+        onChange={handleDishDetails}
+        required
+      />
+      <span className="validity"></span>
+    </div>
   )
 
   const sandwitch = (
-    <p>sandwich</p>
+    <div>
+    <label htmlFor="slices_of_bread">Slices of bread</label>
+    <input 
+      type="number" 
+      id="slices_of_bread"
+      name="slices_of_bread"
+      min="1"
+      step="1"
+      value={dishDetails.slices_of_bread || 0}
+      onChange={handleDishDetails}
+      required
+    />
+    <span className="validity"></span>
+  </div>
   )
 
   const elementToShow = () => {
@@ -143,7 +197,7 @@ function App() {
               onChange={handleChangeDishName}
               required
               />
-          <span class="validity"></span>
+          <span className="validity"></span>
         </div>
         <div>
           <label htmlFor="preparation_time">Preparation time</label>
@@ -151,12 +205,11 @@ function App() {
             type="time"
             id="preparation_time"
             name="preparation_time"
-            value={preparation_time || '00:00:00'}
-            min="00:00:01"
+            value={preparation_time || "00:00:00"}
+            min="00:00:00"
             onChange={handleChangePreparation}
             required
-            />
-            <span class="validity"></span>
+            />  
         </div>
         <div>
           <label htmlFor="type">Dish type</label>
@@ -172,7 +225,7 @@ function App() {
             <option value=''>wybierz</option>
             {types}
           </select>
-          <span class="validity"></span>
+          <span className="validity"></span>
         </div>
         <div>
           {type ? elementToShow() : '' }
@@ -195,10 +248,9 @@ function App() {
       <header className="App-header">
         <h2>Dishes</h2>
       </header>
-      <content>
-        <p>Select</p>
+      <section>
         {dishForm()}
-      </content>
+      </section>
     </div>
   );
 }

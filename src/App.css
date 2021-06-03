@@ -1,4 +1,6 @@
 .App {
+  font-family: Verdana, Tahoma, sans-serif;
+  font-size: 16px;
   text-align: center;
 }
 
@@ -9,6 +11,34 @@
 
 label {
   margin-right: 10px;
+}
+
+header {
+  height: 15vh;
+  min-height: 10vh;
+  margin-bottom: 5vh;
+}
+
+form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: auto;
+  height: 70vh;
+  width: 50%;
+
+  min-height: 30vh;
+  background: chartreuse;
+  
+  justify-content:space-around;
+}
+
+form div {
+  flex-basis: 45%;
+  background: crimson;
+  line-height: 50px;
+  
+
 }
 
 input:invalid+span:after {
