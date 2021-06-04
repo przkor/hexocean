@@ -101,8 +101,11 @@ function App() {
   <>
     <div>
       <label htmlFor="slices">Slices</label>
+    </div>
+    <div className="formDiv">
       <input 
         type="number" 
+        className="form-control"
         id="slices"
         name="slices"
         min="1"
@@ -114,6 +117,8 @@ function App() {
     </div>
     <div>
       <label htmlFor="diameter">Diameter</label>
+    </div>
+    <div className="formDiv">
       <input 
         type="number"
         className="form-control"
@@ -131,10 +136,14 @@ function App() {
   )
 
   const soup = (
+    <>
     <div>
       <label htmlFor="spiciness_scale">Spiciness scale (1-10)</label>
+    </div>
+    <div className="formDiv">
       <input 
         type="number" 
+        className="form-control"
         id="spiciness_scale"
         name="spiciness_scale"
         min="1"
@@ -146,23 +155,29 @@ function App() {
       />
       <span className="validity"></span>
     </div>
+    </>
   )
 
   const sandwitch = (
+  <>
     <div>
-    <label htmlFor="slices_of_bread">Slices of bread</label>
-    <input 
-      type="number" 
-      id="slices_of_bread"
-      name="slices_of_bread"
-      min="1"
-      step="1"
-      value={dishDetails.slices_of_bread || 0}
-      onChange={handleDishDetails}
-      required
-    />
-    <span className="validity"></span>
-  </div>
+      <label htmlFor="slices_of_bread">Slices of bread</label>
+    </div>
+    <div className="formDiv">
+      <input 
+        type="number" 
+        className="form-control"
+        id="slices_of_bread"
+        name="slices_of_bread"
+        min="1"
+        step="1"
+        value={dishDetails.slices_of_bread || 0}
+        onChange={handleDishDetails}
+        required
+      />
+      <span className="validity"></span>
+    </div>
+  </>
   )
 
   const elementToShow = () => {
@@ -188,6 +203,8 @@ function App() {
       <form>
         <div>
           <label htmlFor="name">Dish Name</label>
+        </div>
+        <div className="formDiv">
           <input
               type="text"
               className="form-control"
@@ -201,8 +218,11 @@ function App() {
         </div>
         <div>
           <label htmlFor="preparation_time">Preparation time</label>
+        </div>
+        <div className="formDiv">
           <input 
             type="time"
+            className="form-control"
             id="preparation_time"
             name="preparation_time"
             value={preparation_time || "00:00:00"}
@@ -213,6 +233,8 @@ function App() {
         </div>
         <div>
           <label htmlFor="type">Dish type</label>
+        </div>
+        <div className="formDiv">
           <select
             onChange={handleSelectDishType}
             className="form-control"
@@ -227,9 +249,8 @@ function App() {
           </select>
           <span className="validity"></span>
         </div>
-        <div>
           {type ? elementToShow() : '' }
-        </div>
+        <div>
         <button
           type="button"
           id="submit"
@@ -239,6 +260,7 @@ function App() {
         >
           Send
         </button>
+        </div>
       </form>
     )
   }

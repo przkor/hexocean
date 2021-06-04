@@ -1,6 +1,5 @@
 .App {
   font-family: Verdana, Tahoma, sans-serif;
-  font-size: 16px;
   text-align: center;
 }
 
@@ -9,14 +8,16 @@
   pointer-events: none;
 }
 
-label {
-  margin-right: 10px;
-}
 
 header {
   height: 15vh;
   min-height: 10vh;
   margin-bottom: 5vh;
+}
+
+section {
+  height: 85vh;
+  font-size: 12px;
 }
 
 form {
@@ -26,19 +27,32 @@ form {
   margin: auto;
   height: 70vh;
   width: 50%;
-
-  min-height: 30vh;
-  background: chartreuse;
-  
+  min-height: 50vh;
+  background:oldlace;
   justify-content:space-around;
+  align-content: space-around;
 }
-
 form div {
   flex-basis: 45%;
-  background: crimson;
-  line-height: 50px;
-  
+  text-align: center;
+  font-weight: bold;
+  line-height: 5vh;
+  font-size: 14px;
+}
 
+form div.formDiv {
+  text-align: left;
+}
+
+.form-control {
+  height: 30px;
+  font-size: 14px;
+  width: 75%;
+}
+
+button {
+  width: 70%;
+  height: 7vh;
 }
 
 input:invalid+span:after {
