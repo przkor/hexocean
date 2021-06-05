@@ -1,5 +1,5 @@
 .App {
-  font-family: Verdana, Tahoma, sans-serif;
+  font-family:Verdana, Helvetica, sans-serif;
   text-align: center;
 }
 
@@ -16,6 +16,8 @@ header {
 }
 
 section {
+  display: flex;
+  flex-direction: column;
   height: 85vh;
   font-size: 12px;
 }
@@ -25,22 +27,25 @@ form {
   flex-direction: row;
   flex-wrap: wrap;
   margin: auto;
-  height: 70vh;
+  margin-top: 10px;
   width: 50%;
-  min-height: 50vh;
-  background:oldlace;
+  height: auto;
   justify-content:space-around;
-  align-content: space-around;
+  align-content:flex-start;
+  font-weight: bold;
 }
 form div {
+  margin-top: 10px;
+  height: 6vh;
   flex-basis: 45%;
   text-align: center;
-  font-weight: bold;
-  line-height: 5vh;
+  line-height: 6vh;
   font-size: 14px;
 }
 
 form div.formDiv {
+  line-height: 6vh;
+  background: lightseagreen;
   text-align: left;
 }
 
@@ -48,12 +53,24 @@ form div.formDiv {
   height: 30px;
   font-size: 14px;
   width: 75%;
+  background:lemonchiffon;
 }
 
 button {
-  width: 70%;
-  height: 7vh;
+  font-weight: bold;
+  text-align: center;
+  background:cornsilk;
+  height: 8vh;
+  width: 100%;
 }
+
+.message {
+  width: 50%;
+  text-align: center;
+  color:orangered;
+  font-size: 12px;
+}
+
 
 input:invalid+span:after {
   content: '✖';

@@ -10,6 +10,8 @@ function App() {
   const [preparation_time,setPreparation_time]=useState()
   const [type,setType]=useState()
   const [dishDetails,setDishDetails] = useState({})
+
+  const [message,setMessage] = useState('')
  
   const handleChangeDishName = (e) => {
     setName(e.target.value) 
@@ -22,6 +24,7 @@ function App() {
   const handleSelectDishType = (e) => {
     setType(e.target.value) 
     setDishDetails({})
+    setMessage('')
   }
 
   const handleDishDetails = (e) => {
@@ -80,15 +83,24 @@ function App() {
         setPreparation_time('')
         setType('')
         setDishDetails({})
+        setMessage('')
       }
-      if (response.status===404) {
-        Object.keys(response.data).forEach(key => {
-          console.log(key) // returns the keys in an object
-          console.log(response.data[key])  // returns the appropriate value 
-       })
-      }
+  
+        //Object.keys(response.data).forEach(key => {
+         // console.log(key) // returns the keys in an object
+         // console.log(response.data[key])  // returns the appropriate value 
+      // })
+
     })
     .catch(function (error) {
+      Object.keys(error.response.data).forEach (key => {
+        setMessage(error.response.data[key])
+      })
+    // Object.keys(error.response).forEach(key => {
+     //  alert(error.response[key])
+        // console.log(key) // returns the keys in an object
+        // console.log(response.data[key])  // returns the appropriate value 
+    // })
      console.log(error);
     });
   }
@@ -200,6 +212,7 @@ function App() {
 
   const dishForm = () => {
    return (
+     <>
       <form>
         <div>
           <label htmlFor="name">Dish Name</label>
@@ -250,18 +263,20 @@ function App() {
           <span className="validity"></span>
         </div>
           {type ? elementToShow() : '' }
+        <div></div>
         <div>
-        <button
-          type="button"
-          id="submit"
-          name="submit"
-          className="btn btn-primary pull-right"
-          onClick={handleSendDish}
-        >
-          Send
-        </button>
+          <span className="message">{message ? message : ''}</span>
+          <button
+            type="button"
+            id="submit"
+            name="submit"
+            onClick={handleSendDish}
+          >
+            Send
+          </button>     
         </div>
       </form>
+    </>
     )
   }
 
