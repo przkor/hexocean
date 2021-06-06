@@ -35,8 +35,8 @@ form {
   font-weight: bold;
 }
 form div {
-  margin-top: 10px;
   height: 6vh;
+  margin-top: 20px;
   flex-basis: 45%;
   text-align: center;
   line-height: 6vh;
@@ -45,23 +45,21 @@ form div {
 
 form div.formDiv {
   line-height: 6vh;
-  background: lightseagreen;
   text-align: left;
 }
 
 .form-control {
-  height: 30px;
-  font-size: 14px;
+  height: 6vh;
   width: 75%;
+  font-size: 14px;
   background:lemonchiffon;
 }
 
 button {
   font-weight: bold;
-  text-align: center;
   background:cornsilk;
   height: 8vh;
-  width: 100%;
+  width: 75%;
 }
 
 .message {
